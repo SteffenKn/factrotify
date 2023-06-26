@@ -1,6 +1,8 @@
 {
   "slack": {
-    "username": "<Enter your slack username>"
+    "username": "<Enter your slack username>",
+    "botToken": "<Enter your bot token>",
+    "signingSecret": "<Enter your signing secret>"
   },
   "factro": {
     "apiKey": "<Enter your factro api key>",
