@@ -1,0 +1,26 @@
+{
+  "name": "factrotify",
+  "version": "0.0.1",
+  "description": "The ultimate bot that notifies you about new factro tasks in a snap!",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "start:dev": "npm run build && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SteffenKn/factrotify.git"
+  },
+  "keywords": [
+    "factro",
+    "slack",
+    "notify"
+  ],
+  "author": "Steffen Knaup",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SteffenKn/factrotify/issues"
+  },
+  "homepage": "https://github.com/SteffenKn/factrotify#readme"
+}
