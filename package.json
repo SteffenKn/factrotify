@@ -22,5 +22,11 @@
   "bugs": {
     "url": "https://github.com/SteffenKn/factrotify/issues"
   },
-  "homepage": "https://github.com/SteffenKn/factrotify#readme"
+  "homepage": "https://github.com/SteffenKn/factrotify#readme",
+  "dependencies": {
+    "node-fetch": "^2.6.11"
+  },
+  "devDependencies": {
+    "@types/node-fetch": "^2.6.4"
+  }
 }
