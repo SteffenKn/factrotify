@@ -1,0 +1,9 @@
+{
+  "slack": {
+    "username": "<Enter your slack username>"
+  },
+  "factro": {
+    "apiKey": "<Enter your factro api key>",
+    "employeeId": "<Enter your factro employee id>"
+  }
+}
