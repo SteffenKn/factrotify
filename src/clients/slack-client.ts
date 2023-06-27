@@ -23,6 +23,17 @@ export class SlackClient {
     return this.app.stop();
   }
 
+  public sendMessage(message: string) {
+    if (!this.userId) {
+      throw new Error(`User ID not set`);
+    }
+
+    return this.app.client.chat.postMessage({
+      channel: this.userId,
+      text: message,
+    });
+  }
+
   private async getUserId() {
     const displayName = config.slack.username;
 
@@ -40,16 +51,5 @@ export class SlackClient {
     }
 
     return user.id;
-  }
-
-  public sendMessage(message: string) {
-    if (!this.userId) {
-      throw new Error(`User ID not set`);
-    }
-
-    return this.app.client.chat.postMessage({
-      channel: this.userId,
-      text: message,
-    });
   }
 }
