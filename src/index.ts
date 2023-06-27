@@ -19,7 +19,7 @@ async function run() {
   } catch (error) {
     console.error('Failed to start Slack client. Please check your config: ', error);
 
-    return;
+    process.exit(1);
   }
 
   webserver.addRouter(factroRouter.getRouter());
