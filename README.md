@@ -59,7 +59,9 @@ Als nächstes müssen Sie einen Webhook anlegen.
 Diesen können Sie unter "Einstellungen" -> "Einstellungen" -> "Webhooks" erstellen.
 Unter "Aufzurufende URL" tragen Sie die URL ein, unter der factrotify erreichbar ist, gefolgt von `/factro/task-executor-changed`.
 Als "Aktion" wählen Sie "TaskExecutorChanged" aus.
-Die restlichen Felder können Sie leer lassen.
+Optional können Sie die Authentifizierungsfunktionalität von factro verwenden. Wenn Sie das nicht benötigen können Sie die restlichen Felder können leer lassen und in der [Konfigurationsdatei](./src/config/config.json) unter "factro" -> "webhookAuthKey" den Wert leeren.
+Ansonsten tragen Sie als "Authentifizierungsheader" "authorization" ein und als "Authentifizierungsschlüssel" einen beliebigen Schlüssel ein.
+Den Schlüssel müssen Sie nun in der [Konfigurationsdatei](./src/config/config.json) unter "factro" -> "webhookAuthKey" eintragen.
 Klicken Sie anschließend auf "Webhook erstellen".
 
 Als letztes benötigen Sie die ID Ihres Benutzerkontos.
