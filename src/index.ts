@@ -31,7 +31,18 @@ async function run() {
     }
 
     const taskId = req.body.context.entityId;
-    const task = await factroClient.getTask(taskId);
+
+    let task;
+    try {
+      task = await factroClient.getTask(taskId);
+    } catch (error) {
+      if (error.cause) {
+        throw error.cause;
+      }
+
+      console.error(error);
+      return;
+    }
 
     const { executorId, title } = task;
 

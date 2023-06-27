@@ -11,9 +11,16 @@ export default class FactroClient {
     const result = await fetch(route, { headers: headers });
 
     if (!result.ok) {
-      const error = await result.text();
+      const resultText = await result.text();
+      const errorMessage = `Failed to fetch task (${taskId}): ${resultText}`;
 
-      throw new Error(`Failed to fetch task (${taskId}): ${error}`);
+      if (result.status === 401) {
+        const cause = new Error(`Invalid factro API-Key. Please check your config.`);
+
+        throw new Error(errorMessage, { cause });
+      }
+
+      throw new Error(errorMessage);
     }
 
     return await result.json();
