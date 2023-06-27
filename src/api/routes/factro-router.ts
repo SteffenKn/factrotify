@@ -1,5 +1,7 @@
 import { BaseRouter } from './base-router';
 
+import config from '../../config/config.json';
+
 import { FactroController } from '../controller/index';
 
 export class FactroRouter extends BaseRouter {
@@ -10,10 +12,33 @@ export class FactroRouter extends BaseRouter {
 
     this.controller = controller;
 
+    this.initializeAuthMiddleware();
     this.initializeRoutes();
   }
 
   protected initializeRoutes() {
     this.router.post('/task-executor-changed', this.controller.handleTaskExecutorChanged.bind(this.controller));
+  }
+
+  private initializeAuthMiddleware() {
+    const expectedAuthKey = config.factro.webhookAuthKey;
+
+    if (!expectedAuthKey) {
+      return;
+    }
+
+    this.router.use((request, response, next) => {
+      const authKey = request.headers.authorization;
+
+      if (authKey !== expectedAuthKey) {
+        response.sendStatus(401);
+
+        console.error('Invalid factro request: Invalid authorization key.');
+
+        return;
+      }
+
+      next();
+    });
   }
 }
