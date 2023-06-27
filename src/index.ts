@@ -9,8 +9,13 @@ const webserver = new Webserver();
 
 async function run() {
   webserver.addPostRoute('/factro/task-executor-changed', async (req, res) => {
+    console.log(`Received new task executor event: ${JSON.stringify(req.body)}`);
+
     if (req.body.action !== 'TaskExecutorChanged') {
       res.sendStatus(400);
+
+      console.error(`Received invalid event (expected action: TaskExecutorChanged, actual action: ${req.body.action})`);
+
       return;
     }
 
@@ -23,9 +28,16 @@ async function run() {
 
     if (!userIsNewExecutor) {
       res.sendStatus(200);
+
+      console.log(`User is not the new executor of task "${title}".`);
+
+      return;
     }
 
     const message = `You are now the executor of task: "${title}"`;
+
+    console.log(`Sending message to user: "${message}"`);
+
     await slackClient.sendMessage(userId, message);
 
     res.sendStatus(200);
@@ -37,6 +49,6 @@ async function run() {
 
   webserver.start();
 
-  console.log('⚡️ App is running!');
+  console.log('factrotify is running!');
 }
 run();
