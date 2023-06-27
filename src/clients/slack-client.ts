@@ -37,19 +37,43 @@ export class SlackClient {
   private async getUserId() {
     const displayName = config.slack.username;
 
-    // TODO: Add pagination
-    const result = await this.app.client.users.list();
+    let userId: string | undefined;
+    let cursor: string | undefined;
+    let done: boolean = false;
+
+    while (!done) {
+      const result = await this.getUsers(cursor);
+
+      const user = result.members.find((user) => user.real_name === displayName);
+
+      if (user?.id) {
+        userId = user.id;
+        done = true;
+      } else {
+        cursor = result.nextCursor;
+        done = !cursor;
+      }
+    }
+
+    if (!userId) {
+      throw new Error(`User with display name "${displayName}" not found`);
+    }
+
+    return userId;
+  }
+
+  private async getUsers(cursor?: string) {
+    const result = await this.app.client.users.list({
+      cursor: cursor,
+    });
 
     if (!result.ok || !result.members) {
       throw new Error('Failed to fetch users');
     }
 
-    const user = result.members.find((user) => user.real_name === displayName);
-
-    if (!user?.id) {
-      throw new Error(`User with display name "${displayName}" not found`);
-    }
-
-    return user.id;
+    return {
+      members: result.members,
+      nextCursor: result.response_metadata?.next_cursor,
+    };
   }
 }
