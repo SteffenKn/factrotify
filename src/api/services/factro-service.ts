@@ -34,7 +34,7 @@ export class FactroService {
       return;
     }
 
-    const message = `You are now the executor of task: "${title}"`;
+    const message = `Dir wurde eine neue Aufgabe zugewiesen: "${title}"`;
 
     console.log(`Sending message to user: "${message}"`);
 
