@@ -15,6 +15,10 @@ export default class Webserver {
     });
   }
 
+  public addRouter(router: express.Router) {
+    this.app.use(router);
+  }
+
   public addPostRoute(route: string, callback: (request: express.Request, response: express.Response) => any) {
     this.app.post(route, callback);
   }

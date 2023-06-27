@@ -1,8 +1,10 @@
 import { App } from '@slack/bolt';
-import config from './config/config.json';
+import config from '../config/config.json';
 
-export default class SlackClient {
+export class SlackClient {
   private app: App;
+
+  private userId?: string;
 
   constructor() {
     this.app = new App({
@@ -11,15 +13,19 @@ export default class SlackClient {
     });
   }
 
-  public start() {
-    return this.app.start(3001);
+  public async start() {
+    await this.app.start(3001);
+
+    this.userId = await this.getUserId();
   }
 
   public stop() {
     return this.app.stop();
   }
 
-  public async getUserIdByDisplayName(displayName: string) {
+  private async getUserId() {
+    const displayName = config.slack.username;
+
     // TODO: Add pagination
     const result = await this.app.client.users.list();
 
@@ -36,9 +42,13 @@ export default class SlackClient {
     return user.id;
   }
 
-  public sendMessage(userId: string, message: string) {
+  public sendMessage(message: string) {
+    if (!this.userId) {
+      throw new Error(`User ID not set`);
+    }
+
     return this.app.client.chat.postMessage({
-      channel: userId,
+      channel: this.userId,
       text: message,
     });
   }

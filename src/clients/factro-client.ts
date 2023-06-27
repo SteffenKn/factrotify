@@ -1,9 +1,9 @@
-import config from './config/config.json';
+import config from '../config/config.json';
 import fetch from 'node-fetch';
 
 const baseRoute = `https://cloud.factro.com/api/core/`;
 
-export default class FactroClient {
+export class FactroClient {
   public async getTask(taskId: string) {
     const route = this.buildRoute(`tasks/${taskId}`);
     const headers = this.getHeaders();
