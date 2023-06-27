@@ -1,8 +1,7 @@
-import {App} from '@slack/bolt';
+import { App } from '@slack/bolt';
 import config from './config/config.json';
 
 export default class SlackClient {
-
   private app: App;
 
   constructor() {
@@ -16,7 +15,7 @@ export default class SlackClient {
     return this.app.start(3001);
   }
 
-  public stop () {
+  public stop() {
     return this.app.stop();
   }
 

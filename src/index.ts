@@ -1,15 +1,14 @@
-import SlackClient from "./slack-client";
-import FactroClient from "./factro-client";
-import Webserver from "./webserver";
+import SlackClient from './slack-client';
+import FactroClient from './factro-client';
+import Webserver from './webserver';
 import config from './config/config.json';
 
 const slackClient = new SlackClient();
 const factroClient = new FactroClient();
 const webserver = new Webserver();
 
-
 async function run() {
-  webserver.addPostRoute('/factro/task-executor-changed', async(req, res) => {
+  webserver.addPostRoute('/factro/task-executor-changed', async (req, res) => {
     if (req.body.action !== 'TaskExecutorChanged') {
       res.sendStatus(400);
       return;
@@ -18,7 +17,7 @@ async function run() {
     const taskId = req.body.context.entityId;
     const task = await factroClient.getTask(taskId);
 
-    const {executorId, title} = task;
+    const { executorId, title } = task;
 
     const userIsNewExecutor = executorId === config.factro.employeeId;
 

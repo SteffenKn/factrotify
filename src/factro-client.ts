@@ -8,7 +8,7 @@ export default class FactroClient {
     const route = this.buildRoute(`tasks/${taskId}`);
     const headers = this.getHeaders();
 
-    const result = await fetch(route, {headers: headers});
+    const result = await fetch(route, { headers: headers });
 
     if (!result.ok) {
       const error = await result.text();

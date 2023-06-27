@@ -12,7 +12,7 @@ export default class Webserver {
   public start() {
     return new Promise<void>((resolve) => {
       this.app.listen(3000, resolve);
-    })
+    });
   }
 
   public addPostRoute(route: string, callback: (request: express.Request, response: express.Response) => any) {
