@@ -8,6 +8,17 @@ const factroClient = new FactroClient();
 const webserver = new Webserver();
 
 async function run() {
+  let userId: string;
+  try {
+    await slackClient.start();
+
+    userId = await slackClient.getUserIdByDisplayName(config.slack.username);
+  } catch (error) {
+    console.error('Failed to start Slack client. Please check your config: ', error);
+
+    return;
+  }
+
   webserver.addPostRoute('/factro/task-executor-changed', async (req, res) => {
     console.log(`Received new task executor event: ${JSON.stringify(req.body)}`);
 
@@ -43,11 +54,7 @@ async function run() {
     res.sendStatus(200);
   });
 
-  await slackClient.start();
-
-  const userId = await slackClient.getUserIdByDisplayName(config.slack.username);
-
-  webserver.start();
+  await webserver.start();
 
   console.log('factrotify is running!');
 }
