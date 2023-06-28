@@ -1,3 +1,4 @@
+import { NotificationService } from './notification-service';
 import { Webserver } from './webserver';
 import { SlackClient, FactroClient } from './clients';
 
@@ -7,9 +8,11 @@ import { FactroRouter, SlackRouter } from './api/routes';
 
 const slackClient = new SlackClient();
 const factroClient = new FactroClient();
-const webserver = new Webserver();
 
-const factroService = new FactroService(factroClient, slackClient);
+const webserver = new Webserver();
+const notificationService = new NotificationService(slackClient);
+
+const factroService = new FactroService(factroClient, notificationService);
 const factroController = new FactroController(factroService);
 const factroRouter = new FactroRouter(factroController);
 

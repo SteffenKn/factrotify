@@ -1,14 +1,14 @@
 import config from '../../config/config.json';
-import { FactroClient, SlackClient } from '../../clients';
-import { Task } from '../../types';
+import { FactroClient } from '../../clients';
+import { NotificationService } from '../../notification-service';
 
 export class FactroService {
   private factroClient: FactroClient;
-  private slackClient: SlackClient;
+  private notificationService: NotificationService;
 
-  constructor(factroClient: FactroClient, slackClient: SlackClient) {
+  constructor(factroClient: FactroClient, notificationService: NotificationService) {
     this.factroClient = factroClient;
-    this.slackClient = slackClient;
+    this.notificationService = notificationService;
   }
 
   public async handleTaskExecutorChanged(taskId: string) {
@@ -32,61 +32,14 @@ export class FactroService {
       return;
     }
 
-    const message = this.getExecutorChangedMessage(task);
-    const components = this.buildExecutorChangedComponents(task);
+    const taskUrl = this.buildTaskUrl(task.mandantId, task.projectId, task.id);
 
-    console.log(`Sending message: "${message}"`);
-
-    await this.slackClient.sendMessage(message, components);
+    this.notificationService.notify(task.id, task.title, taskUrl);
   }
 
   private buildTaskUrl(mandantId: string, projectId: string, taskId: string) {
     const shortMandantId = mandantId.slice(0, 8);
 
     return `https://cloud.factro.com/${shortMandantId}/Project/${projectId}/psb?p=task&pi=${taskId}`;
-  }
-
-  private buildExecutorChangedComponents(task: Task) {
-    return [
-      {
-        type: 'section',
-        block_id: 'text-block',
-        text: {
-          type: 'mrkdwn',
-          text: this.getExecutorChangedMessage(task, true),
-        },
-      },
-      {
-        type: 'actions',
-        block_id: 'button-row-block',
-        elements: [
-          {
-            type: 'button',
-            text: {
-              type: 'plain_text',
-              text: 'Aufgabe öffnen',
-            },
-            style: 'primary',
-            url: this.buildTaskUrl(task.mandantId, task.projectId, task.id),
-            action_id: 'open-task',
-          },
-          {
-            type: 'button',
-            text: {
-              type: 'plain_text',
-              text: 'Aufgabe abschließen',
-            },
-            value: task.id,
-            action_id: 'finish-task',
-          },
-        ],
-      },
-    ];
-  }
-
-  private getExecutorChangedMessage(task: Task, markdown = false) {
-    const taskTitle = markdown ? `*${task.title}*` : task.title;
-
-    return `Dir wurde eine neue Aufgabe zugewiesen: "${taskTitle}"`;
   }
 }
