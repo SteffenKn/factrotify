@@ -35,7 +35,7 @@ export class FactroService {
     const message = this.getExecutorChangedMessage(task);
     const components = this.buildExecutorChangedComponents(task);
 
-    console.log(`Sending message to user: "${message}"`);
+    console.log(`Sending message: "${message}"`);
 
     await this.slackClient.sendMessage(message, components);
   }
