@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { FactroService } from '../services/factro-service';
+import { FactroService } from '../services';
 
 export class FactroController {
   private service: FactroService;
