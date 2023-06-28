@@ -3,8 +3,8 @@ import express from 'express';
 export abstract class BaseRouter {
   protected router: express.Router;
 
-  constructor(basePath?: string) {
-    this.router = express.Router();
+  constructor(basePath?: string, router?: express.Router) {
+    this.router = router ? router : express.Router();
 
     if (basePath) {
       this.router.use(basePath, this.router);

@@ -1,8 +1,8 @@
 import { BaseRouter } from './base-router';
 
-import config from '../../config/config.json';
+import { FactroController } from '../controller';
 
-import { FactroController } from '../controller/index';
+import config from '../../config/config.json';
 
 export class FactroRouter extends BaseRouter {
   private controller: FactroController;

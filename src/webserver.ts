@@ -1,12 +1,16 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
-export default class Webserver {
+export class Webserver {
   private app: express.Application;
 
   constructor() {
     this.app = express();
-    this.app.use(bodyParser.json());
+
+    // The slack client needs to be able to parse the request body by itself.
+    // Therefore, we need to disable the body parser for the slack routes.
+    this.app.use(/\/((?!slack).)*/, express.json());
+    this.app.use(/\/((?!slack).)*/, bodyParser.urlencoded({ extended: true }));
   }
 
   public start() {

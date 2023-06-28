@@ -1,9 +1,9 @@
+import { Webserver } from './webserver';
 import { SlackClient, FactroClient } from './clients';
-import Webserver from './webserver';
 
-import { FactroController } from './api/controller';
-import { FactroService } from './api/services';
-import { FactroRouter } from './api/routes';
+import { FactroController, SlackController } from './api/controller';
+import { FactroService, SlackService } from './api/services';
+import { FactroRouter, SlackRouter } from './api/routes';
 
 const slackClient = new SlackClient();
 const factroClient = new FactroClient();
@@ -13,7 +13,14 @@ const factroService = new FactroService(factroClient, slackClient);
 const factroController = new FactroController(factroService);
 const factroRouter = new FactroRouter(factroController);
 
+const slackService = new SlackService(factroClient);
+const slackController = new SlackController(slackService);
+const slackRouter = new SlackRouter(slackController, slackClient);
+
 async function run() {
+  webserver.addRouter(factroRouter.getRouter());
+  webserver.addRouter(slackRouter.getRouter());
+
   try {
     await slackClient.start();
   } catch (error) {
@@ -21,8 +28,6 @@ async function run() {
 
     process.exit(1);
   }
-
-  webserver.addRouter(factroRouter.getRouter());
 
   await webserver.start();
 
