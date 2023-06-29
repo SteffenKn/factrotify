@@ -34,12 +34,35 @@ export class SlackController {
     }
 
     const previousMessage = payload.body.message;
-    if (!previousMessage || !previousMessage.text || !previousMessage.blocks) {
+    const newMessage = this.updateTaskMessage(previousMessage);
+    if (!newMessage) {
       console.error(`Could not update slack message. Previous message is missing.`);
       return;
     }
 
-    const blocksWithoutFinishButton = previousMessage.blocks.map((block: KnownBlock) => {
+    await respond(newMessage);
+  }
+
+  // This is needed to prevent Slack from showing an error message
+  public handleOpenTask(payload: SlackActionMiddlewareArgs) {
+    return payload.ack();
+  }
+
+  private updateTaskMessage(previousMessage: BlockAction<ButtonAction>['message']) {
+    if (!previousMessage || !previousMessage.text || !previousMessage.blocks) {
+      return;
+    }
+
+    const blocksWithoutFinishButton = this.filterOutFinishButton(previousMessage.blocks);
+
+    return {
+      text: previousMessage.text,
+      blocks: blocksWithoutFinishButton,
+    };
+  }
+
+  private filterOutFinishButton(blocks: KnownBlock[]) {
+    return blocks.map((block: KnownBlock) => {
       if (block.type !== 'actions' || block.block_id !== 'button-row-block') {
         return block;
       }
@@ -57,15 +80,5 @@ export class SlackController {
         elements: newElements,
       };
     });
-
-    await respond({
-      text: previousMessage.text,
-      blocks: blocksWithoutFinishButton,
-    });
-  }
-
-  // This is needed to prevent Slack from showing an error message
-  public handleOpenTask(payload: SlackActionMiddlewareArgs) {
-    return payload.ack();
   }
 }
