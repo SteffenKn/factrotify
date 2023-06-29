@@ -7,8 +7,10 @@ factrotify ist ein simpler Bot der über Slack Benachrichtigungen versendet, sob
 - [Node.JS](https://nodejs.org/de)
 - [Slack](https://slack.com)
 - [factro](https://www.factro.de)
+- Port 3000 (Der Port kann in der [Konfigurationsdatei](./src/config/config.json) geändert werden)
+- [Docker](https://www.docker.com) (Optional)
 
-- Port 3000 muss frei sein.
+Docker wird optional benötigt, wenn factrotify in einem Docker-Container ausgeführt werden soll.
 
 ## Konfiguration
 
@@ -35,6 +37,11 @@ Hier müssen Sie nun folgende "Bot Token Scopes" hinzufügen:
 Anschließend müssen Sie den Bot noch in den Workspace einladen.
 Hierfür scrollen Sie zunächst hoch und wählen dann "Install to Workspace" aus.
 Klicken Sie anschließend auf "Zulassen".
+
+Damit die Slack Benachrichtigungen interaktiv sind, müssen Sie nun noch die Interaktionsfunktionen aktivieren.
+Hierfür wählen Sie "Interactivity & Shortcuts" aus.
+Aktivieren Sie hier den Switch in der oberen rechten Ecke und geben Sie dann unter "Request URL" die URL ein, unter der factrotify erreichbar ist, gefolgt von `/slack/events`.
+Klicken Sie anschließend auf "Save Changes".
 
 Die Installation ist nun abgeschlossen.
 Der nun angezeigte "Bot User OAuth Token" kann nun in die [Konfigurationsdatei](./src/config/config.json) unter "slack" -> "botToken" eingetragen werden.
@@ -93,11 +100,13 @@ Da factrotify nun konfiguriert und installiert ist, können Sie die Anwendung nu
 npm start
 ```
 
-## Docker
+## Docker (Optional)
 
 Alternativ können Sie factrotify auch über Docker starten.
 
-Dafür müssen Sie zunächst das Image bauen.
+In dem Fall können Sie die Kapitel Installation und Starten überspringen.
+
+Um factrotify als Docker Container zu starten müssen Sie zunächst das Image bauen.
 
 ```bash
 docker build -t factrotify .
@@ -108,3 +117,5 @@ Dann können Sie das Image starten.
 ```bash
 docker run -p 3000:3000 factrotify --name factrotify
 ```
+
+> Wenn Sie den Port in der [Konfigurationsdatei](./src/config/config.json) geändert haben, müssen Sie diesen hier auch ändern.
