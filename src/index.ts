@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { Container } from 'inversify';
 
-import { registerIocModule } from './IocModule';
+import { registerIocModule } from './ioc-module';
 import { Webserver } from './webserver';
 import { SlackClient } from './clients';
 
