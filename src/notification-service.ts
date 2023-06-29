@@ -1,3 +1,5 @@
+import { KnownBlock } from '@slack/bolt';
+
 import { SlackClient } from './clients';
 
 export class NotificationService {
@@ -16,7 +18,7 @@ export class NotificationService {
     await this.slackClient.sendMessage(text, message);
   }
 
-  private getExecutorChangedMessage(taskId: string, taskTitle: string, taskUrl: string) {
+  private getExecutorChangedMessage(taskId: string, taskTitle: string, taskUrl: string): Array<KnownBlock> {
     return [
       {
         type: 'section',
