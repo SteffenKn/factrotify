@@ -8,5 +8,6 @@
     "apiKey": "<Enter your factro api key>",
     "employeeId": "<Enter your factro employee id>",
     "webhookAuthKey": "<Enter your factro webhook auth key or leave empty for none>"
-  }
+  },
+  "port": 3000
 }

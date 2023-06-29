@@ -5,6 +5,8 @@ import { Container } from 'inversify';
 import { IocDiscoveryTags } from './types';
 import { BaseRouter } from './api/routes/base-router';
 
+import config from './config/config.json';
+
 export class Webserver {
   private app: express.Application;
 
@@ -21,7 +23,7 @@ export class Webserver {
 
   public start() {
     return new Promise<void>((resolve) => {
-      this.app.listen(3000, resolve);
+      this.app.listen(config.port, resolve);
     });
   }
 
