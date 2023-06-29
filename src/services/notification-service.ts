@@ -1,8 +1,8 @@
 import { KnownBlock } from '@slack/bolt';
 import { injectable, inject } from 'inversify';
 
-import { SlackClient } from './clients';
-import { IocIds } from './types';
+import { SlackClient } from '../clients';
+import { IocIds } from '../types';
 
 @injectable()
 export class NotificationService {

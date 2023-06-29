@@ -2,7 +2,7 @@ import { injectable, inject } from 'inversify';
 
 import config from '../../config/config.json';
 import { FactroClient } from '../../clients';
-import { NotificationService } from '../../notification-service';
+import { NotificationService } from '../../services/notification-service';
 import { IocIds } from '../../types/index';
 
 @injectable()
