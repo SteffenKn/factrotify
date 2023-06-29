@@ -10,7 +10,6 @@ RUN npm ci
 
 COPY --chown=node:node . .
 
-RUN npm install -g typescript
 RUN npm run build
 
 EXPOSE 3000
