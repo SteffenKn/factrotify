@@ -5,10 +5,10 @@ import { FactroController, SlackController } from './api/controller';
 import { FactroService, SlackService } from './api/services';
 
 import { FactroClient, SlackClient } from './clients';
-import { NotificationService } from './notification-service';
+import { NotificationService } from './services';
 import { IocDiscoveryTags, IocIds } from './types/index';
 
-export function registerIocModule(container: Container) {
+export function registerModulesInContainer(container: Container) {
   registerClientsInContainer(container);
   registerServicesInContainer(container);
   registerApiInContainer(container);

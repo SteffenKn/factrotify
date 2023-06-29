@@ -1,14 +1,14 @@
 import 'reflect-metadata';
 import { Container } from 'inversify';
 
-import { registerIocModule } from './ioc-module';
+import { registerModulesInContainer } from './ioc-module';
 import { Webserver } from './webserver';
 import { SlackClient } from './clients';
 
 import { IocIds } from './types';
 
 const container = new Container();
-registerIocModule(container);
+registerModulesInContainer(container);
 
 const webserver = new Webserver(container);
 const slackClient = container.get<SlackClient>(IocIds.SlackClient);
