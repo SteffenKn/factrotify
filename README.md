@@ -8,7 +8,7 @@ factrotify ist ein simpler Bot der über Slack Benachrichtigungen versendet, sob
 - [Slack](https://slack.com)
 - [factro](https://www.factro.de)
 
-Port 3000 und 30001 müssen frei sein.
+- Port 3000 muss frei sein.
 
 ## Konfiguration
 
