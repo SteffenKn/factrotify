@@ -8,12 +8,13 @@ factrotify ist ein simpler Bot der über Slack Benachrichtigungen versendet, sob
 - [Slack](https://slack.com)
 - [factro](https://www.factro.de)
 - Port 3000 (Der Port kann in der [Konfigurationsdatei](./src/config/config.json) geändert werden)
-- [Docker](https://www.docker.com) (Optional)
-- [ngrok](https://ngrok.com) (Optional)
 
-ngrok wird optional benötigt, wenn factrotify nicht öffentlich erreichbar ist.
+Optional:
 
-Docker wird optional benötigt, wenn factrotify in einem Docker-Container ausgeführt werden soll.
+- [ngrok](https://ngrok.com)
+  > ngrok wird optional benötigt, um factrotify öffentlich erreichbar zu machen.
+- [Docker](https://www.docker.com)
+  > Docker wird optional benötigt, um factrotify in einem Docker-Container auszuführen.
 
 ## Konfiguration
 
