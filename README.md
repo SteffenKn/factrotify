@@ -12,6 +12,7 @@ factrotify ist ein simpler Bot der über Slack Benachrichtigungen versendet, sob
 - [ngrok](https://ngrok.com) (Optional)
 
 ngrok wird optional benötigt, wenn factrotify nicht öffentlich erreichbar ist.
+
 Docker wird optional benötigt, wenn factrotify in einem Docker-Container ausgeführt werden soll.
 
 ## Konfiguration
@@ -42,7 +43,7 @@ ngrok http 3000
 Unter "Forwarding" können Sie nun die URL finden, unter der factrotify erreichbar ist.
 Diese sieht folgendermaßen aus: `https://<ID>.ngrok-free.app`.
 
-Diese URL wird später für die Konfiguration von Slack und factro benötigt.
+Diese URL wird später für die Konfiguration von Slack (`Request URL`) und factro (`Aufzurufende URL`) benötigt.
 
 > WICHTIG: Die URL ändert sich jedes mal, wenn Sie ngrok neu starten. Dann müssen Sie die URL in Slack und factro neu eintragen.
 
@@ -71,6 +72,7 @@ Klicken Sie anschließend auf "Zulassen".
 Damit die Slack Benachrichtigungen interaktiv sind, müssen Sie nun noch die Interaktionsfunktionen aktivieren.
 Hierfür wählen Sie "Interactivity & Shortcuts" aus.
 Aktivieren Sie hier den Switch in der oberen rechten Ecke und geben Sie dann unter "Request URL" die URL ein, unter der factrotify erreichbar ist, gefolgt von `/slack/events`.
+Falls Sie ngrok verwenden, müssen Sie die URL von ngrok eintragen (siehe [ngrok](#ngrok-optional)).
 Klicken Sie anschließend auf "Save Changes".
 
 Die Installation ist nun abgeschlossen.
@@ -97,6 +99,7 @@ Dieser kann nun in die [Konfigurationsdatei](./src/config/config.json) unter "fa
 Als nächstes müssen Sie einen Webhook anlegen.
 Diesen können Sie unter "Einstellungen" -> "Einstellungen" -> "Webhooks" erstellen.
 Unter "Aufzurufende URL" tragen Sie die URL ein, unter der factrotify erreichbar ist, gefolgt von `/factro/task-executor-changed`.
+Falls Sie ngrok verwenden, müssen Sie die URL von ngrok eintragen (siehe [ngrok](#ngrok-optional)).
 Als "Aktion" wählen Sie "TaskExecutorChanged" aus.
 
 Optional können Sie die Authentifizierungsfunktionalität von factro verwenden.
@@ -112,6 +115,8 @@ Um diese herauszufinden klicken Sie auf "Benutzer" und wählen Sie Ihren Benutze
 In der URL können Sie nun Ihre ID finden `https://cloud.factro.com/<mandantID>/Users/Overview?p=employee&pi=<IHRE ID>`.
 Alternativ können Sie über [diesen API-Request](https://cloud.factro.com/api/core/docs/#/users/HandleGetUsers) die Benutzer abrufen und Ihre ID heraussuchen.
 Die ID kann nun in die [Konfigurationsdatei](./src/config/config.json) unter "factro" -> "employeeId" eingetragen werden.
+
+Die Konfiguration ist nun vollständig abgeschlossen.
 
 ## Installation
 
