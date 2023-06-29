@@ -35,7 +35,13 @@ export class Webserver {
     const routers = container.getAll<BaseRouter>(IocDiscoveryTags.Router);
 
     routers.forEach((router) => {
-      this.app.use(router.getRouter());
+      const basePath = router.getBasePath();
+
+      if (basePath) {
+        this.app.use(basePath, router.getRouter());
+      } else {
+        this.app.use(router.getRouter());
+      }
     });
   }
 }

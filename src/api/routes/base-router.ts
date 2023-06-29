@@ -8,17 +8,20 @@ const unmanaged = _unmanaged as () => (target: DecoratorTarget, targetKey: strin
 @injectable()
 export abstract class BaseRouter {
   protected router: express.Router;
+  protected basePath: string | undefined;
 
   constructor(@unmanaged() basePath?: string, router?: express.Router) {
     this.router = router ? router : express.Router();
 
-    if (basePath) {
-      this.router.use(basePath, this.router);
-    }
+    this.basePath = basePath;
   }
 
   public getRouter() {
     return this.router;
+  }
+
+  public getBasePath() {
+    return this.basePath;
   }
 
   protected abstract initializeRoutes(): void;

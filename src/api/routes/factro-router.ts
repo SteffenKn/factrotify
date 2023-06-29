@@ -31,7 +31,7 @@ export class FactroRouter extends BaseRouter {
       return;
     }
 
-    this.router.use('/factro', (request, response, next) => {
+    this.router.use((request, response, next) => {
       const authKey = request.headers.authorization;
 
       if (authKey !== expectedAuthKey) {
