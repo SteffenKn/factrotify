@@ -63,7 +63,7 @@ export class SlackClient {
   }
 
   private async getUserId() {
-    const displayName = config.slack.username;
+    const expectedDisplayName = config.slack.username;
 
     let userId: string | undefined;
     let cursor: string | undefined;
@@ -72,7 +72,10 @@ export class SlackClient {
     while (!done) {
       const result = await this.getUsers(cursor);
 
-      const user = result.members.find((user) => user.real_name === displayName);
+      const user = result.members.find((user) => {
+        const username = user.profile?.display_name || user.real_name || user.name;
+        return username === expectedDisplayName;
+      });
 
       if (user?.id) {
         userId = user.id;
@@ -84,7 +87,7 @@ export class SlackClient {
     }
 
     if (!userId) {
-      throw new Error(`User with display name "${displayName}" not found`);
+      throw new Error(`User with display name "${expectedDisplayName}" not found`);
     }
 
     return userId;
