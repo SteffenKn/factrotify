@@ -86,3 +86,19 @@ Da factrotify nun konfiguriert und installiert ist, können Sie die Anwendung nu
 ```bash
 npm start
 ```
+
+## Docker
+
+Alternativ können Sie factrotify auch über Docker starten.
+
+Dafür müssen Sie zunächst das Image bauen.
+
+```bash
+docker build -t factrotify .
+```
+
+Dann können Sie das Image starten.
+
+```bash
+docker run -p 3000:3000 factrotify --name factrotify
+```
