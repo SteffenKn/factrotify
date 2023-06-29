@@ -50,18 +50,24 @@ Die Konfiguration von Slack ist nun abgeschlossen.
 
 ### factro
 
-Um factrotify nutzen zu können benötigen Sie einen API Key von factro.
+Damit factrotify auf Änderungen an Tasks hören kann wird ein API Key von factro benötigt.
 Diesen können Sie unter "Einstellungen" -> "Einstellungen" -> "API" erstellen.
 Geben Sie einen Namen und eine Beschreibung für den API Key ein und klicken Sie auf "API-Key erstellen".
-Nun wird der API-Key angezeigt. Dieser kann nun in die [Konfigurationsdatei](./src/config/config.json) unter "factro" -> "apiKey" eingetragen werden.
+Nun wird der API-Key angezeigt.
+
+Dieser kann nun in die [Konfigurationsdatei](./src/config/config.json) unter "factro" -> "apiKey" eingetragen werden.
 
 Als nächstes müssen Sie einen Webhook anlegen.
 Diesen können Sie unter "Einstellungen" -> "Einstellungen" -> "Webhooks" erstellen.
 Unter "Aufzurufende URL" tragen Sie die URL ein, unter der factrotify erreichbar ist, gefolgt von `/factro/task-executor-changed`.
 Als "Aktion" wählen Sie "TaskExecutorChanged" aus.
-Optional können Sie die Authentifizierungsfunktionalität von factro verwenden. Wenn Sie das nicht benötigen können Sie die restlichen Felder können leer lassen und in der [Konfigurationsdatei](./src/config/config.json) unter "factro" -> "webhookAuthKey" den Wert leeren.
-Ansonsten tragen Sie als "Authentifizierungsheader" "authorization" ein und als "Authentifizierungsschlüssel" einen beliebigen Schlüssel ein.
+
+Optional können Sie die Authentifizierungsfunktionalität von factro verwenden.
+Dazu tragen Sie einfach als "Authentifizierungsheader" "authorization" ein und als "Authentifizierungsschlüssel" einen beliebigen Schlüssel ein.
 Den Schlüssel müssen Sie nun in der [Konfigurationsdatei](./src/config/config.json) unter "factro" -> "webhookAuthKey" eintragen.
+
+Wenn Sie das nicht benötigen können Sie die restlichen Felder können leer lassen und in der [Konfigurationsdatei](./src/config/config.json) unter "factro" -> "webhookAuthKey" den Wert leeren.
+
 Klicken Sie anschließend auf "Webhook erstellen".
 
 Als letztes benötigen Sie die ID Ihres Benutzerkontos.
