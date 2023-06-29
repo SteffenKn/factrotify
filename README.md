@@ -9,12 +9,42 @@ factrotify ist ein simpler Bot der über Slack Benachrichtigungen versendet, sob
 - [factro](https://www.factro.de)
 - Port 3000 (Der Port kann in der [Konfigurationsdatei](./src/config/config.json) geändert werden)
 - [Docker](https://www.docker.com) (Optional)
+- [ngrok](https://ngrok.com) (Optional)
 
+ngrok wird optional benötigt, wenn factrotify nicht öffentlich erreichbar ist.
 Docker wird optional benötigt, wenn factrotify in einem Docker-Container ausgeführt werden soll.
 
 ## Konfiguration
 
 Bevor Sie factrotify nutzen können müssen Sie ein paar Vorbereitungen treffen.
+
+### ngrok (Optional)
+
+Falls factrotify nicht öffentlich erreichbar ist, können Sie ngrok verwenden.
+ngrok erstellt einen Tunnel zu Ihrem lokalen Server und leitet die Anfragen weiter.
+
+Zuerst müssen Sie ngrok [herunterladen](https://ngrok.com/download).
+Außerdem müssen Sie sich [registrieren](https://dashboard.ngrok.com/signup) und den [Authtoken](https://dashboard.ngrok.com/get-started/your-authtoken) kopieren.
+Meden Sie sich nun über die Kommandozeile mit Ihrem Authtoken an.
+
+```bash
+ngrok config add-authtoken <AUTHTOKEN>
+```
+
+Starten Sie nun ngrok mit dem folgenden Befehl.
+
+```bash
+ngrok http 3000
+```
+
+> Wenn Sie den Port in der [Konfigurationsdatei](./src/config/config.json) geändert haben, müssen Sie diesen hier auch ändern.
+
+Unter "Forwarding" können Sie nun die URL finden, unter der factrotify erreichbar ist.
+Diese sieht folgendermaßen aus: `https://<ID>.ngrok-free.app`.
+
+Diese URL wird später für die Konfiguration von Slack und factro benötigt.
+
+> WICHTIG: Die URL ändert sich jedes mal, wenn Sie ngrok neu starten. Dann müssen Sie die URL in Slack und factro neu eintragen.
 
 ### Slack
 
