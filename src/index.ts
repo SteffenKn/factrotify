@@ -23,6 +23,6 @@ async function run() {
   }
   await webserver.start();
 
-  console.log('factrotify is running!');
+  console.log('factrotify is running');
 }
 run();

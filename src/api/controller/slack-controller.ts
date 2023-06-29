@@ -13,10 +13,15 @@ export class SlackController {
   }
 
   public async handleFinishTask(payload: SlackActionMiddlewareArgs<BlockAction<ButtonAction>>) {
-    console.log(`Received new finish task request: ${JSON.stringify(payload)}`);
+    if (typeof payload?.action?.value !== 'string') {
+      console.error(`Received invalid finish task request. Payload: ${JSON.stringify(payload)}`);
+    }
+
+    const taskId = payload.action.value;
+
+    console.log(`Received new finish task request (taskId: "${taskId}")`);
 
     const { ack, say, respond } = payload;
-    const taskId = payload.action.value;
 
     await ack();
 

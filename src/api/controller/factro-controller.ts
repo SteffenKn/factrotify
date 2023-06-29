@@ -13,19 +13,24 @@ export class FactroController {
   }
 
   async handleTaskExecutorChanged(request: express.Request, response: express.Response) {
-    console.log(`Received new task executor event: ${JSON.stringify(request.body)}`);
-
     const action = request.body.action;
+    const taskId = request.body.context?.entityId;
+
+    if (!action || !taskId) {
+      response.sendStatus(400);
+
+      console.error(`Received invalid event (missing action or context.entityId). Body: ${JSON.stringify(request.body)}`);
+      return;
+    }
 
     if (action !== 'TaskExecutorChanged') {
       response.sendStatus(400);
 
-      console.error(`Received invalid event (expected action: TaskExecutorChanged, actual action: ${request.body.action})`);
-
+      console.error(`Received invalid event (expected action: "TaskExecutorChanged", actual action: "${request.body.action}")`);
       return;
     }
 
-    const taskId = request.body.context.entityId;
+    console.log(`Received new task executor changed event (taskId: "${taskId}")`);
 
     try {
       await this.service.handleTaskExecutorChanged(taskId);
