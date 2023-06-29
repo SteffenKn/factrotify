@@ -1,12 +1,16 @@
+import { injectable, inject } from 'inversify';
+
 import config from '../../config/config.json';
 import { FactroClient } from '../../clients';
 import { NotificationService } from '../../notification-service';
+import { IocIds } from '../../types/index';
 
+@injectable()
 export class FactroService {
   private factroClient: FactroClient;
   private notificationService: NotificationService;
 
-  constructor(factroClient: FactroClient, notificationService: NotificationService) {
+  constructor(@inject(IocIds.FactroClient) factroClient: FactroClient, @inject(IocIds.NotificationService) notificationService: NotificationService) {
     this.factroClient = factroClient;
     this.notificationService = notificationService;
   }

@@ -1,11 +1,14 @@
+import { injectable, inject } from 'inversify';
 import { BlockAction, ButtonAction, KnownBlock, SlackActionMiddlewareArgs } from '@slack/bolt';
 
 import { SlackService } from '../services';
+import { IocIds } from '../../types/index';
 
+@injectable()
 export class SlackController {
   private service: SlackService;
 
-  constructor(service: SlackService) {
+  constructor(@inject(IocIds.SlackService) service: SlackService) {
     this.service = service;
   }
 

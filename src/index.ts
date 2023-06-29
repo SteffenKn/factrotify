@@ -1,29 +1,19 @@
-import { NotificationService } from './notification-service';
+import 'reflect-metadata';
+import { Container } from 'inversify';
+
+import { registerIocModule } from './IocModule';
 import { Webserver } from './webserver';
-import { SlackClient, FactroClient } from './clients';
+import { SlackClient } from './clients';
 
-import { FactroController, SlackController } from './api/controller';
-import { FactroService, SlackService } from './api/services';
-import { FactroRouter, SlackRouter } from './api/routes';
+import { IocIds } from './types';
 
-const slackClient = new SlackClient();
-const factroClient = new FactroClient();
+const container = new Container();
+registerIocModule(container);
 
-const webserver = new Webserver();
-const notificationService = new NotificationService(slackClient);
-
-const factroService = new FactroService(factroClient, notificationService);
-const factroController = new FactroController(factroService);
-const factroRouter = new FactroRouter(factroController);
-
-const slackService = new SlackService(factroClient);
-const slackController = new SlackController(slackService);
-const slackRouter = new SlackRouter(slackController, slackClient);
+const webserver = new Webserver(container);
+const slackClient = container.get<SlackClient>(IocIds.SlackClient);
 
 async function run() {
-  webserver.addRouter(factroRouter.getRouter());
-  webserver.addRouter(slackRouter.getRouter());
-
   try {
     await slackClient.start();
   } catch (error) {
@@ -31,7 +21,6 @@ async function run() {
 
     process.exit(1);
   }
-
   await webserver.start();
 
   console.log('factrotify is running!');

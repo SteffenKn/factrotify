@@ -9,9 +9,11 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
+    "types": ["reflect-metadata"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "useUnknownInCatchVariables": false,
     "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "useUnknownInCatchVariables": false
+    "resolveJsonModule": true
   }
 }

@@ -1,13 +1,17 @@
+import { IocIds } from '../../types/ioc-ids';
+import { injectable, inject } from 'inversify';
+
 import { BaseRouter } from './base-router';
 
 import { FactroController } from '../controller';
 
 import config from '../../config/config.json';
 
+@injectable()
 export class FactroRouter extends BaseRouter {
   private controller: FactroController;
 
-  constructor(controller: FactroController) {
+  constructor(@inject(IocIds.FactroController) controller: FactroController) {
     super('/factro');
 
     this.controller = controller;

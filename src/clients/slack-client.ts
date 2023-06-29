@@ -1,7 +1,9 @@
 import { App, ExpressReceiver, Block, KnownBlock } from '@slack/bolt';
+import { injectable } from 'inversify';
 
 import config from '../config/config.json';
 
+@injectable()
 export class SlackClient {
   private app: App;
   private expressReceiver: ExpressReceiver;

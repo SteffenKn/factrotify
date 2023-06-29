@@ -1,3 +1,4 @@
+import { injectable } from 'inversify';
 import fetch, { HeadersInit } from 'node-fetch';
 
 import { mapTask } from './mappers';
@@ -7,6 +8,7 @@ import { TaskState } from '../types';
 
 const baseRoute = `https://cloud.factro.com/api/core`;
 
+@injectable()
 export class FactroClient {
   public async getTask(taskId: string) {
     const route = this.buildRoute(`/tasks/${taskId}`);

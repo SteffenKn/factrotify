@@ -1,9 +1,13 @@
-import { FactroClient } from '../../clients';
+import { injectable, inject } from 'inversify';
 
+import { FactroClient } from '../../clients';
+import { IocIds } from '../../types';
+
+@injectable()
 export class SlackService {
   private factroClient: FactroClient;
 
-  constructor(factroClient: FactroClient) {
+  constructor(@inject(IocIds.FactroClient) factroClient: FactroClient) {
     this.factroClient = factroClient;
   }
 

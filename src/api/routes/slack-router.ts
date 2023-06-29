@@ -1,14 +1,18 @@
+import { injectable, inject } from 'inversify';
+
 import { BaseRouter } from './base-router';
 
 import { SlackController } from '../controller';
 
 import { SlackClient } from './../../clients/slack-client';
+import { IocIds } from '../../types/index';
 
+@injectable()
 export class SlackRouter extends BaseRouter {
   private controller: SlackController;
   private slackClient: SlackClient;
 
-  constructor(controller: SlackController, slackClient: SlackClient) {
+  constructor(@inject(IocIds.SlackController) controller: SlackController, @inject(IocIds.SlackClient) slackClient: SlackClient) {
     super('/slack', slackClient.getRouter());
 
     this.controller = controller;

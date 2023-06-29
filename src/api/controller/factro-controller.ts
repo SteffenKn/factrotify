@@ -1,11 +1,14 @@
 import express from 'express';
+import { injectable, inject } from 'inversify';
 
 import { FactroService } from '../services';
+import { IocIds } from '../../types/index';
 
+@injectable()
 export class FactroController {
   private service: FactroService;
 
-  constructor(service: FactroService) {
+  constructor(@inject(IocIds.FactroService) service: FactroService) {
     this.service = service;
   }
 
